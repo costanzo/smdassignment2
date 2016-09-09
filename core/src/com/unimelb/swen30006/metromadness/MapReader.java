@@ -111,8 +111,11 @@ public class MapReader {
 		} else if (type.equals("SmallPassenger")){
 			return new SmallPassengerTrain(l,s,dir);
 		} else {
-			return new Train(l, s, dir);
+			System.out.println("Please specify the train type");
+			System.exit(-1);
 		}
+
+		return null;
 	}
 
 	private Station processStation(Element e){
