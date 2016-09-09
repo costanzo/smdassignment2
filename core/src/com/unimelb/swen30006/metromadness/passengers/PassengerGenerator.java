@@ -10,15 +10,12 @@ public class PassengerGenerator {
 	
 	// The station that passengers are getting on
 	public Station s;
-	// The line they are travelling on
-	public ArrayList<Line> lines;
 	
 	// The max volume
 	public float maxVolume;
 	
-	public PassengerGenerator(Station s, ArrayList<Line> lines, float max){
+	public PassengerGenerator(Station s, float max){
 		this.s = s;
-		this.lines = lines;
 		this.maxVolume = max;
 	}
 	
@@ -33,7 +30,9 @@ public class PassengerGenerator {
 	
 	public Passenger generatePassenger(){
 		// Pick a random station from the line
-		Line l = this.lines.get((int)Math.random()*(this.lines.size()-1));
+		ArrayList<Line> lines = this.s.getLines();
+
+		Line l = lines.get((int)Math.random()*(lines.size()-1));
 		int current_station = l.stations.indexOf(this.s);
 		boolean forward = Math.random()>0.5f;
 		

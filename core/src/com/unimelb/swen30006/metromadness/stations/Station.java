@@ -31,6 +31,10 @@ public class Station {
 		this.lines = new ArrayList<Line>();
 		this.trains = new ArrayList<Train>();
 	}
+
+	public ArrayList<Line> getLines(){
+		return this.lines;
+	}
 	
 	public void registerLine(Line l){
 		this.lines.add(l);
