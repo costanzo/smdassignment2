@@ -2,10 +2,12 @@ package com.unimelb.swen30006.metromadness.stations;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.passengers.Passenger;
+import com.unimelb.swen30006.metromadness.passengers.PassengerGenerator;
 import com.unimelb.swen30006.metromadness.routers.PassengerRouter;
 import com.unimelb.swen30006.metromadness.tracks.Line;
 import com.unimelb.swen30006.metromadness.trains.Train;
@@ -25,6 +27,8 @@ public class Station {
 	public PassengerRouter router;
 	private boolean isActive;
 	private float maxVolume;
+	public ArrayList<Passenger> waiting;
+	public PassengerGenerator g;
 
 	public Station(float x, float y, PassengerRouter router, String name, boolean isActive, float maxPax){
 		this.name = name;
@@ -34,10 +38,8 @@ public class Station {
 		this.trains = new ArrayList<Train>();
 		this.isActive = isActive;
 		this.maxVolume = maxPax;
-	}
-
-	public ArrayList<Line> getLines(){
-		return this.lines;
+		this.g = new PassengerGenerator(this, maxPax);
+		this.waiting = new ArrayList<Passenger>();
 	}
 	
 	public void registerLine(Line l){
@@ -59,12 +61,39 @@ public class Station {
 		renderer.setColor(c);
 		renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);		
 	}
-	
+
 	public void enter(Train t) throws Exception {
 		if(trains.size() >= PLATFORMS){
 			throw new Exception();
 		} else {
+			// Add the train
 			this.trains.add(t);
+			// Add the waiting passengers
+			Iterator<Passenger> pIter = this.waiting.iterator();
+			while(pIter.hasNext()){
+				Passenger p = pIter.next();
+				try {
+					t.embark(p);
+					pIter.remove();
+				} catch (Exception e){
+					// Do nothing, already waiting
+					break;
+				}
+			}
+
+			//Do not add new passengers if there are too many already
+			if (this.waiting.size() > maxVolume){
+				return;
+			}
+			// Add the new passenger
+			Passenger[] ps = this.g.generatePassengers();
+			for(Passenger p: ps){
+				try {
+					t.embark(p);
+				} catch(Exception e){
+					this.waiting.add(p);
+				}
+			}
 		}
 	}
 	
