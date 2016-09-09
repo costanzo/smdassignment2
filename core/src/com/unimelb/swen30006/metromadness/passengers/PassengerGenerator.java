@@ -30,9 +30,7 @@ public class PassengerGenerator {
 	
 	public Passenger generatePassenger(){
 		// Pick a random station from the line
-		ArrayList<Line> lines = this.s.getLines();
-
-		Line l = lines.get((int)Math.random()*(lines.size()-1));
+		Line l = this.s.getRandomLine();
 		int current_station = l.stations.indexOf(this.s);
 		boolean forward = Math.random()>0.5f;
 		

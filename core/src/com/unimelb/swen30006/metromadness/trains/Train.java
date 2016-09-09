@@ -162,9 +162,7 @@ public abstract class Train {
 		this.pos.setLocation(newX, newY);
 	}
 
-	public void embark(Passenger p) throws Exception {
-		throw new Exception();
-	}
+	public abstract void embark(Passenger p)throws Exception;
 
 
 	public ArrayList<Passenger> disembark(){

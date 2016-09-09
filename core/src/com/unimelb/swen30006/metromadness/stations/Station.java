@@ -23,13 +23,17 @@ public class Station {
 	public ArrayList<Train> trains;
 	public static final float DEPARTURE_TIME = 2;
 	public PassengerRouter router;
+	private boolean isActive;
+	private float maxVolume;
 
-	public Station(float x, float y, PassengerRouter router, String name){
+	public Station(float x, float y, PassengerRouter router, String name, boolean isActive, float maxPax){
 		this.name = name;
 		this.router = router;
 		this.position = new Point2D.Float(x,y);
 		this.lines = new ArrayList<Line>();
 		this.trains = new ArrayList<Train>();
+		this.isActive = isActive;
+		this.maxVolume = maxPax;
 	}
 
 	public ArrayList<Line> getLines(){
@@ -95,6 +99,10 @@ public class Station {
 	public Passenger generatePassenger(Station s) {
 		return new Passenger(this, s);
 	}
-	
+
+	public Line getRandomLine(){
+		Line l = lines.get((int)Math.random()*(lines.size()-1));
+		return l;
+	}
 	
 }
