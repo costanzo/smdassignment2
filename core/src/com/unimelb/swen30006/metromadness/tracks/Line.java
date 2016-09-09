@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.stations.Station;
+import com.unimelb.swen30006.metromadness.trains.Train;
 
 public class Line {
 	
@@ -87,6 +88,61 @@ public class Line {
 		} else {
 			throw new Exception();
 		}
+	}
+
+	public void enter(Station s, boolean forward){
+		Track t = null ;
+		try {
+			t = previousTrack(s, forward);
+		}
+		catch (Exception e){
+			//massive error
+			System.exit(-1);
+		}
+		t.leave(forward);
+	}
+
+	public Track previousTrack(Station currentStation, boolean forward) throws Exception {
+		if(this.stations.contains(currentStation)){
+			// Determine the track index
+			int curIndex = this.stations.lastIndexOf(currentStation);
+			// Increment to retrieve
+			if(forward){ curIndex -=1;}
+
+			// Check index is within range
+			if((curIndex < 0) || (curIndex > this.tracks.size()-1)){
+				throw new Exception();
+			} else {
+				return this.tracks.get(curIndex);
+			}
+
+		} else {
+			throw new Exception();
+		}
+	}
+
+	public boolean canDepart(Station s, boolean forward){
+		Track t = null ;
+		try {
+			t = nextTrack(s, forward);
+		}
+		catch (Exception e){
+			//massive error
+			System.exit(-1);
+		}
+		return t.canEnter(forward);
+	}
+
+	public void depart(Station s, boolean forward){
+		Track t = null ;
+		try {
+			t = nextTrack(s, forward);
+		}
+		catch (Exception e){
+			//massive error
+			System.exit(-1);
+		}
+		t.enter(forward);
 	}
 	
 	public Station nextStation(Station s, boolean forward) throws Exception{

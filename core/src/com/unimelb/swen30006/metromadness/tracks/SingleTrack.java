@@ -22,11 +22,11 @@ public class SingleTrack extends Track{
         return !this.occupied;
     }
 
-    public void enter(Train t){
+    public void enter(boolean forward){
         this.occupied = true;
     }
 
-    public void leave(Train t){
+    public void leave(boolean forward){
         this.occupied = false;
     }
 

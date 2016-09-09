@@ -66,6 +66,7 @@ public class Station {
 		if(trains.size() >= PLATFORMS){
 			throw new Exception();
 		} else {
+
 			// Add the train
 			this.trains.add(t);
 			// Add the waiting passengers

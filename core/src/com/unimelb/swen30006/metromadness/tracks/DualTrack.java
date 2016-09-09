@@ -25,8 +25,8 @@ public class DualTrack extends Track {
 	}
 	
 	@Override
-	public void enter(Train t){
-		if(t.forward){
+	public void enter(boolean forward){
+		if(forward){
 			this.forwardOccupied = true;
 		} else {
 			this.backwardOccupied = true;
@@ -43,8 +43,8 @@ public class DualTrack extends Track {
 	}
 
 	@Override
-	public void leave(Train t) {
-		if(t.forward){
+	public void leave(boolean forward) {
+		if(forward){
 			this.forwardOccupied = false;
 		} else {
 			this.backwardOccupied = false;

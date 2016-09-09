@@ -24,8 +24,8 @@ public abstract class Track {
 	
 	public abstract boolean canEnter(boolean forward);
 	
-	public abstract void enter(Train t);
+	public abstract void enter(boolean forward);
 
 
-	public abstract void leave(Train t);
+	public abstract void leave(boolean forward);
 }
