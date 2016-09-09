@@ -111,6 +111,10 @@ public class Station {
 		return trains.size() < PLATFORMS;
 	}
 
+	public boolean canHold(Train t){
+		return true;
+	}
+
 	// Returns departure time in seconds
 	public float getDepartureTime() {
 		return DEPARTURE_TIME;

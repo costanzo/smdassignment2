@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 // The things we are generating
 import com.unimelb.swen30006.metromadness.routers.PassengerRouter;
 import com.unimelb.swen30006.metromadness.routers.SimpleRouter;
+import com.unimelb.swen30006.metromadness.stations.ShortPlatformStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
 import com.unimelb.swen30006.metromadness.trains.BigPassengerTrain;
@@ -129,6 +130,9 @@ public class MapReader {
 			return new Station(x_loc, y_loc, r, name, true, maxPax);
 		} else if (type.equals("Passive")){
 			return new Station(x_loc, y_loc, r, name, false, 0);
+		} else if (type.equals("ShortPlatformStation")){
+			int maxPax = e.getInt("max_passengers");
+			return new ShortPlatformStation(x_loc, y_loc, r, name, true, maxPax);
 		}
 		
 		return null;

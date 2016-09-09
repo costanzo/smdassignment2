@@ -9,15 +9,8 @@ import com.unimelb.swen30006.metromadness.tracks.Line;
 public class SmallPassengerTrain extends Train {
 
 	public SmallPassengerTrain(Line trainLine, Station start, boolean forward) {
-		super(trainLine, start, forward);
-	}
+		super(trainLine, start, forward, 10);
 
-	@Override
-	public void embark(Passenger p) throws Exception {
-		if(this.passengers.size() > 10){
-			throw new Exception();
-		}
-		this.passengers.add(p);
 	}
 	
 	@Override

@@ -7,6 +7,7 @@ import java.util.Iterator;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.passengers.Passenger;
+import com.unimelb.swen30006.metromadness.stations.ShortPlatformStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
 import com.unimelb.swen30006.metromadness.tracks.Track;
@@ -36,6 +37,7 @@ public abstract class Train {
 	// Station and track and position information
 	public Station station;
 	public Point2D.Float pos;
+	private int maxPassengers;
 
 	// Direction and direction
 	public boolean forward;
@@ -46,12 +48,20 @@ public abstract class Train {
 	public boolean disembarked;
 
 	
-	public Train(Line trainLine, Station start, boolean forward){
+	public Train(Line trainLine, Station start, boolean forward, int maxPassengers){
 		this.trainLine = trainLine;
 		this.station = start;
 		this.state = State.FROM_DEPOT;
 		this.forward = forward;
 		this.passengers = new ArrayList<Passenger>();
+		this.maxPassengers = maxPassengers;
+	}
+
+	public boolean isSmallTrain(){
+		if(this.maxPassengers > 50)
+			return false;
+		else
+			return true;
 	}
 
 	public void update(float delta){
@@ -140,12 +150,17 @@ public abstract class Train {
 			// then we need to enter, otherwise we just wait
 			try {
 				if(this.station.canEnter(this.trainLine)){
-					//this.track.leave(this);
 					this.pos = (Point2D.Float) this.station.position.clone();
 					this.trainLine.enter(this.station, this.forward);
 					this.station.enter(this);
 					this.state = State.IN_STATION;
-					this.disembarked = false;
+					if (this.station.canHold(this)){
+						this.disembarked = false;
+					}
+					else{
+						this.disembarked = true;
+					}
+
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -164,8 +179,12 @@ public abstract class Train {
 		this.pos.setLocation(newX, newY);
 	}
 
-	public abstract void embark(Passenger p)throws Exception;
-
+	public void embark(Passenger p) throws Exception {
+		if(this.passengers.size() > this.maxPassengers){
+			throw new Exception();
+		}
+		this.passengers.add(p);
+	}
 
 	public ArrayList<Passenger> disembark(){
 		ArrayList<Passenger> disembarking = new ArrayList<Passenger>();

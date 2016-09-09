@@ -90,7 +90,7 @@
 			<max_passengers> 100 </max_passengers>
 		</station>
 		<station>
-			<type>Active</type>
+			<type>ShortPlatformStation</type>
 			<name>Melbourne Central</name>
 			<x_loc>2800</x_loc>
 			<y_loc>5200</y_loc>
