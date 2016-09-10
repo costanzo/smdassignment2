@@ -8,7 +8,7 @@ import com.unimelb.swen30006.metromadness.trains.Train;
 
 import java.awt.geom.Point2D;
 
-/**
+ /**
  * Created by Shuyi Sun on 9/9/2016.
  */
 class SingleTrack extends Track{
