@@ -23,7 +23,7 @@ import com.unimelb.swen30006.metromadness.trains.BigPassengerTrain;
 import com.unimelb.swen30006.metromadness.trains.SmallPassengerTrain;
 import com.unimelb.swen30006.metromadness.trains.Train;
 
-class MapReader {
+public class MapReader {
 
 	private ArrayList<Train> trains;
 	private HashMap<String, Station> stations;

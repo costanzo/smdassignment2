@@ -1,5 +1,7 @@
 package com.unimelb.swen30006.metromadness.stations;
-
+/*
+Visibility has been modified
+ */
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -1,4 +1,7 @@
 package com.unimelb.swen30006.metromadness.tracks;
+/*
+Visibility has been modified
+ */
 
 import java.awt.geom.Point2D;
 

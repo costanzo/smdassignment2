@@ -1,5 +1,8 @@
 package com.unimelb.swen30006.metromadness.passengers;
 
+/*
+Visibility has been modified
+ */
 import java.util.ArrayList;
 import java.util.Random;
 

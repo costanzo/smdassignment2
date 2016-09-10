@@ -4,7 +4,7 @@ import com.unimelb.swen30006.metromadness.routers.PassengerRouter;
 import com.unimelb.swen30006.metromadness.trains.Train;
 
 /**
- * Created by Sean on 9/9/2016.
+ * Created by Sean on 9/9/2016. and the visibility has been modified
  */
 public class ShortPlatformStation extends Station{
 

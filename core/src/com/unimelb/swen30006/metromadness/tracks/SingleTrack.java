@@ -1,5 +1,7 @@
 package com.unimelb.swen30006.metromadness.tracks;
-
+/*
+Visibility has been modified
+ */
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.trains.Train;

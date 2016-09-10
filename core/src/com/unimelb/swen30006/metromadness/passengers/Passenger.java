@@ -1,5 +1,8 @@
 package com.unimelb.swen30006.metromadness.passengers;
 
+/*
+Visibility has been modified
+ */
 import com.unimelb.swen30006.metromadness.stations.Station;
 
 public class Passenger {
