@@ -10,15 +10,15 @@ import com.unimelb.swen30006.metromadness.trains.Train;
 public class Line {
 	
 	// The colour of this line
-	public Color lineColour;
-	public Color trackColour;
+	private Color lineColour;
+	private Color trackColour;
 	
 	// The name of this line
-	public String name;
+	private String name;
 	// The stations on this line
-	public ArrayList<Station> stations;
+	private ArrayList<Station> stations;
 	// The tracks on this line between stations
-	public ArrayList<Track> tracks;
+	private ArrayList<Track> tracks;
 		
 	// Create a line
 	public Line(Color stationColour, Color lineColour, String name){
@@ -31,8 +31,18 @@ public class Line {
 		this.stations = new ArrayList<Station>();
 		this.tracks = new ArrayList<Track>();
 	}
-	
-	
+
+	public String getName(){
+		return this.name;
+	}
+	public Color getLineColour (){
+	    return this.lineColour;
+    }
+    public ArrayList<Station> getStations(){
+        return this.stations;
+    }
+
+
 	public void addStation(Station s, Boolean two_way){
 		// We need to build the track if this is adding to existing stations
 		if(this.stations.size() > 0){
@@ -42,9 +52,9 @@ public class Line {
 			// Generate a new track
 			Track t;
 			if(two_way){
-				t = new DualTrack(last.position, s.position, this.trackColour);
+				t = new DualTrack(last.getPosition(), s.getPosition(), this.trackColour);
 			} else {
-				t = new SingleTrack(last.position, s.position, this.trackColour);
+				t = new SingleTrack(last.getPosition(), s.getPosition(), this.trackColour);
 			}
 			this.tracks.add(t);
 		}
@@ -71,7 +81,7 @@ public class Line {
 
 	
 	
-	public Track nextTrack(Station currentStation, boolean forward) throws Exception {
+	private Track nextTrack(Station currentStation, boolean forward) throws Exception {
 		if(this.stations.contains(currentStation)){
 			// Determine the track index
 			int curIndex = this.stations.lastIndexOf(currentStation);
@@ -102,7 +112,7 @@ public class Line {
 		t.leave(forward);
 	}
 
-	public Track previousTrack(Station currentStation, boolean forward) throws Exception {
+	private Track previousTrack(Station currentStation, boolean forward) throws Exception {
 		if(this.stations.contains(currentStation)){
 			// Determine the track index
 			int curIndex = this.stations.lastIndexOf(currentStation);

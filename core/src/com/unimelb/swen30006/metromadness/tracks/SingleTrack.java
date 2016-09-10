@@ -9,11 +9,11 @@ import java.awt.geom.Point2D;
 /**
  * Created by Shuyi Sun on 9/9/2016.
  */
-public class SingleTrack extends Track{
+class SingleTrack extends Track{
 
-    public boolean occupied;
+    private boolean occupied;
 
-    public SingleTrack(Point2D.Float start, Point2D.Float end, Color trackCol){
+    SingleTrack(Point2D.Float start, Point2D.Float end, Color trackCol){
         super(start, end, trackCol);
         this.occupied = false;
     }

@@ -15,37 +15,37 @@ import com.unimelb.swen30006.metromadness.tracks.Track;
 public abstract class Train {
 
 	// The state that a train can be in 
-	public enum State {
+	private enum State {
 		IN_STATION, READY_DEPART, ON_ROUTE, WAITING_ENTRY, FROM_DEPOT
 	}
 
 	// Constants
-	public static final int MAX_TRIPS=4;
-	public static final Color FORWARD_COLOUR = Color.ORANGE;
-	public static final Color BACKWARD_COLOUR = Color.VIOLET;
-	public static final float TRAIN_WIDTH=4;
-	public static final float TRAIN_LENGTH = 6;
-	public static final float TRAIN_SPEED=50f;
+	protected static final int MAX_TRIPS=4;
+	static final Color FORWARD_COLOUR = Color.ORANGE;
+	static final Color BACKWARD_COLOUR = Color.VIOLET;
+	static final float TRAIN_WIDTH=4;
+	protected static final float TRAIN_LENGTH = 6;
+	private static final float TRAIN_SPEED=50f;
 
 	// The line that this is traveling on
-	public Line trainLine;
+	private Line trainLine;
 
 	// Passenger Information
-	public ArrayList<Passenger> passengers;
-	public float departureTimer;
+	ArrayList<Passenger> passengers;
+	private float departureTimer;
 	
 	// Station and track and position information
-	public Station station;
-	public Point2D.Float pos;
+	protected Station station;
+	Point2D.Float pos;
 	private int maxPassengers;
 
 	// Direction and direction
-	public boolean forward;
-	public State state;
+	boolean forward;
+	private State state;
 
 	// State variables
-	public int numTrips;
-	public boolean disembarked;
+	private int numTrips;
+	private boolean disembarked;
 
 	
 	public Train(Line trainLine, Station start, boolean forward, int maxPassengers){
@@ -69,7 +69,7 @@ public abstract class Train {
 		for(Passenger p: this.passengers){
 			p.update(delta);
 		}
-		
+
 		// Update the state
 		switch(this.state) {
 		case FROM_DEPOT:
@@ -78,7 +78,7 @@ public abstract class Train {
 			try {
 				if(this.station.canEnter(this.trainLine)){
 					this.station.enter(this);
-					this.pos = (Point2D.Float) this.station.position.clone();
+					this.pos = (Point2D.Float) this.station.getPosition().clone();
 					this.state = State.IN_STATION;
 					this.disembarked = false;
 				}
@@ -138,7 +138,7 @@ public abstract class Train {
 		case ON_ROUTE:
 
 			// Checkout if we have reached the new station
-			if(this.pos.distance(this.station.position) < 10 ){
+			if(this.pos.distance(this.station.getPosition()) < 10 ){
 				this.state = State.WAITING_ENTRY;
 			} else {
 				move(delta);
@@ -150,7 +150,7 @@ public abstract class Train {
 			// then we need to enter, otherwise we just wait
 			try {
 				if(this.station.canEnter(this.trainLine)){
-					this.pos = (Point2D.Float) this.station.position.clone();
+					this.pos = (Point2D.Float) this.station.getPosition().clone();
 					this.trainLine.enter(this.station, this.forward);
 					this.station.enter(this);
 					this.state = State.IN_STATION;
@@ -171,9 +171,9 @@ public abstract class Train {
 
 	}
 
-	public void move(float delta){
+	private void move(float delta){
 		// Work out where we're going
-		float angle = angleAlongLine(this.pos.x,this.pos.y,this.station.position.x,this.station.position.y);
+		float angle = angleAlongLine(this.pos.x,this.pos.y,this.station.getPosition().x,this.station.getPosition().y);
 		float newX = this.pos.x + (float)( Math.cos(angle) * delta * TRAIN_SPEED);
 		float newY = this.pos.y + (float)( Math.sin(angle) * delta * TRAIN_SPEED);
 		this.pos.setLocation(newX, newY);
@@ -186,7 +186,7 @@ public abstract class Train {
 		this.passengers.add(p);
 	}
 
-	public ArrayList<Passenger> disembark(){
+	private ArrayList<Passenger> disembark(){
 		ArrayList<Passenger> disembarking = new ArrayList<Passenger>();
 		Iterator<Passenger> iterator = this.passengers.iterator();
 		while(iterator.hasNext()){
@@ -201,15 +201,15 @@ public abstract class Train {
 
 	@Override
 	public String toString() {
-		return "Train [line=" + this.trainLine.name +", departureTimer=" + departureTimer + ", pos=" + pos + ", forward=" + forward + ", state=" + state
+		return "Train [line=" + this.trainLine.getName() +", departureTimer=" + departureTimer + ", pos=" + pos + ", forward=" + forward + ", state=" + state
 				+ ", numTrips=" + numTrips + ", disembarked=" + disembarked + "]";
 	}
 
-	public boolean inStation(){
+	boolean inStation(){
 		return (this.state == State.IN_STATION || this.state == State.READY_DEPART);
 	}
 	
-	public float angleAlongLine(float x1, float y1, float x2, float y2){	
+	private float angleAlongLine(float x1, float y1, float x2, float y2){
 		return (float) Math.atan2((y2-y1),(x2-x1));
 	}
 

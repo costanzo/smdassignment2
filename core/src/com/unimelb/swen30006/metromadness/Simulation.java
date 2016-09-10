@@ -8,13 +8,13 @@ import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
 import com.unimelb.swen30006.metromadness.trains.Train;
 
-public class Simulation {
+class Simulation {
 	
-	public ArrayList<Station> stations;
-	public ArrayList<Line> lines;
-	public ArrayList<Train> trains;
+	private ArrayList<Station> stations;
+	private ArrayList<Line> lines;
+	private ArrayList<Train> trains;
 	
-	public Simulation(String fileName){
+	Simulation(String fileName){
 		// Create a map reader and read in the file
 		MapReader m = new MapReader(fileName);
 		m.process();
@@ -34,7 +34,7 @@ public class Simulation {
 	
 	
 	// Update all the trains in the simulation
-	public void update(){
+	void update(){
 		// Update all the trains
 		for(Train t: this.trains){
 			t.update(Gdx.graphics.getDeltaTime());
