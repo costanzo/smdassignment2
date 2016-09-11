@@ -23,7 +23,7 @@ public abstract class Train {
 	}
 
 	// Constants
-	protected static final int MAX_TRIPS=4;
+	static final int MAX_TRIPS=4;
 	static final Color FORWARD_COLOUR = Color.ORANGE;
 	static final Color BACKWARD_COLOUR = Color.VIOLET;
 	static final float TRAIN_WIDTH=4;
@@ -38,9 +38,9 @@ public abstract class Train {
 	private float departureTimer;
 	
 	// Station and track and position information
-	protected Station station;
+	Station station;
 	Point2D.Float pos;
-	private int maxPassengers;
+	int maxPassengers;
 
 	// Direction and direction
 	boolean forward;
