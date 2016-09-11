@@ -79,8 +79,9 @@ public abstract class Train {
 			// We have our station initialized we just need to retrieve the next track, enter the
 			// current station offically and mark as in station
 			try {
-				if(this.station.canEnter(this.trainLine)){
-					this.station.enter(this);
+				boolean canEnter = this.station.canEnter(this.trainLine);
+				if(canEnter){
+					this.station.enter(this, trainLine, forward);
 					this.pos = (Point2D.Float) this.station.getPosition().clone();
 					this.state = State.IN_STATION;
 					this.disembarked = false;
@@ -103,7 +104,8 @@ public abstract class Train {
 				} else {
 					// We are ready to depart, find the next track and wait until we can enter 
 					try {
-						boolean endOfLine = this.trainLine.endOfLine(this.station);
+						//boolean endOfLine = this.trainLine.endOfLine(this.station);
+                        boolean endOfLine = this.station.endStation(this.trainLine);
 						if(endOfLine){
 							this.forward = !this.forward;
 						}
@@ -122,19 +124,21 @@ public abstract class Train {
 			// When ready to depart, check that the track is clear and if
 			// so, then occupy it if possible.
 			//if(this.track.canEnter(this.forward))
-			 if(this.trainLine.canDepart(this.station, this.forward)){
+            //boolean canDepart = this.trainLine.canDepart(this.station, this.forward);
+            boolean canDepart = this.station.canDepart(this.trainLine, this.forward);
+			 if(canDepart){
 			 	Station previousStation = this.station;
 				try {
 					// Find the next
-					Station next = this.trainLine.nextStation(this.station, this.forward);
+					//Station next = this.trainLine.nextStation(this.station, this.forward);
+                    Station next = this.station.nextStation(this.trainLine, this.forward);
 					// Depart our current station
-					this.station.depart(this);
+					this.station.depart(this, previousStation, this.trainLine, this.forward);
 					this.station = next;
 
 				} catch (Exception e) {
 //					e.printStackTrace();
 				}
-				trainLine.depart(previousStation, this.forward);
 				this.state = State.ON_ROUTE;
 			}		
 			break;
@@ -154,8 +158,7 @@ public abstract class Train {
 			try {
 				if(this.station.canEnter(this.trainLine)){
 					this.pos = (Point2D.Float) this.station.getPosition().clone();
-					this.trainLine.enter(this.station, this.forward);
-					this.station.enter(this);
+					this.station.enter(this, trainLine, this.forward);
 					this.state = State.IN_STATION;
 					if (this.station.canHold(this)){
 						this.disembarked = false;

@@ -71,11 +71,11 @@ public class Station {
 		renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);		
 	}
 
-	public void enter(Train t) throws Exception {
+	public void enter(Train t, Line l, boolean forward) throws Exception {
 		if(trains.size() >= PLATFORMS){
 			throw new Exception();
 		} else {
-
+		    l.enter(this, forward);
 			// Add the train
 			this.trains.add(t);
 			// Add the waiting passengers
@@ -108,9 +108,10 @@ public class Station {
 	}
 	
 	
-	public void depart(Train t) throws Exception {
+	public void depart(Train t, Station preSta, Line l, boolean forward) throws Exception {
 		if(this.trains.contains(t)){
 			this.trains.remove(t);
+            l.depart(preSta, forward);
 		} else {
 			throw new Exception();
 		}
@@ -147,5 +148,16 @@ public class Station {
 		Line l = lines.get((int)Math.random()*(lines.size()-1));
 		return l;
 	}
-	
+
+	public boolean endStation(Line l) throws Exception{
+	    return l.endOfLine(this);
+    }
+
+    public boolean canDepart(Line l, boolean forward){
+        return l.canDepart(this, forward);
+    }
+
+    public Station nextStation(Line l, boolean forward) throws Exception{
+        return l.nextStation(this, forward);
+    }
 }
