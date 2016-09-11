@@ -15,8 +15,8 @@ import com.unimelb.swen30006.metromadness.tracks.Line;
 import com.unimelb.swen30006.metromadness.trains.Train;
 
 public class Station {
-	
-	private static final int PLATFORMS=2;
+
+	static final int PLATFORMS=2;
 	
 	private Point2D.Float position;
 	private static final float RADIUS=6;
@@ -24,13 +24,13 @@ public class Station {
 	private static final int MAX_LINES=3;
 	private String name;
 	private ArrayList<Line> lines;
-	private ArrayList<Train> trains;
+    ArrayList<Train> trains;
 	private static final float DEPARTURE_TIME = 2;
 	private PassengerRouter router;
 	private boolean isActive;
-	private float maxVolume;
-	private ArrayList<Passenger> waiting;
-	private PassengerGenerator g;
+	float maxVolume;
+	ArrayList<Passenger> waiting;
+	PassengerGenerator g;
 
 	public Station(float x, float y, PassengerRouter router, String name, boolean isActive, float maxPax){
 		this.name = name;
@@ -145,8 +145,7 @@ public class Station {
 	}
 
 	public Line getRandomLine(){
-		Line l = lines.get((int)(Math.random()*(lines.size()-1)));
-		return l;
+		return lines.get((int)(Math.random()*(lines.size()-1)));
 	}
 
 	public boolean endStation(Line l) throws Exception{

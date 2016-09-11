@@ -131,6 +131,9 @@ public abstract class Train {
 //					e.printStackTrace();
 				}
 				this.state = State.ON_ROUTE;
+
+                 if(this.station.getName().equals("Melbourne Central"))
+                     System.out.println(this.passengers.size());
 			}		
 			break;
 		case ON_ROUTE:
@@ -151,10 +154,10 @@ public abstract class Train {
 					this.pos = (Point2D.Float) this.station.getPosition().clone();
 					this.station.enter(this, trainLine, this.forward);
 					this.state = State.IN_STATION;
-
-
 					this.disembarked = !this.station.canHold(this);
 
+                    if(this.station.getName().equals("Melbourne Central"))
+                        System.out.println(this.passengers.size());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
