@@ -61,10 +61,7 @@ public abstract class Train {
 	}
 
 	public boolean isSmallTrain(){
-		if(this.maxPassengers > 50)
-			return false;
-		else
-			return true;
+        return (this.maxPassengers < 50);
 	}
 
 	public void update(float delta){
@@ -154,12 +151,9 @@ public abstract class Train {
 					this.pos = (Point2D.Float) this.station.getPosition().clone();
 					this.station.enter(this, trainLine, this.forward);
 					this.state = State.IN_STATION;
-					if (this.station.canHold(this)){
-						this.disembarked = false;
-					}
-					else{
-						this.disembarked = true;
-					}
+
+
+					this.disembarked = !this.station.canHold(this);
 
 				}
 			} catch (Exception e) {
