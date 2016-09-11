@@ -38,9 +38,9 @@ public abstract class Train {
 	private float departureTimer;
 	
 	// Station and track and position information
-	Station station;
+	private Station station;
 	Point2D.Float pos;
-	int maxPassengers;
+	private int maxPassengers;
 
 	// Direction and direction
 	boolean forward;
@@ -104,12 +104,10 @@ public abstract class Train {
 				} else {
 					// We are ready to depart, find the next track and wait until we can enter 
 					try {
-						//boolean endOfLine = this.trainLine.endOfLine(this.station);
                         boolean endOfLine = this.station.endStation(this.trainLine);
 						if(endOfLine){
 							this.forward = !this.forward;
 						}
-						//this.track = this.trainLine.nextTrack(this.station, this.forward);
 						this.state = State.READY_DEPART;
 						break;
 					} catch (Exception e){
@@ -123,14 +121,11 @@ public abstract class Train {
 
 			// When ready to depart, check that the track is clear and if
 			// so, then occupy it if possible.
-			//if(this.track.canEnter(this.forward))
-            //boolean canDepart = this.trainLine.canDepart(this.station, this.forward);
             boolean canDepart = this.station.canDepart(this.trainLine, this.forward);
 			 if(canDepart){
 			 	Station previousStation = this.station;
 				try {
 					// Find the next
-					//Station next = this.trainLine.nextStation(this.station, this.forward);
                     Station next = this.station.nextStation(this.trainLine, this.forward);
 					// Depart our current station
 					this.station.depart(this, previousStation, this.trainLine, this.forward);
