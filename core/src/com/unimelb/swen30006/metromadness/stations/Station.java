@@ -108,10 +108,10 @@ public class Station {
 	}
 	
 	
-	public void depart(Train t, Station preSta, Line l, boolean forward) throws Exception {
+	public void depart(Train t, Line l, boolean forward) throws Exception {
 		if(this.trains.contains(t)){
 			this.trains.remove(t);
-            l.depart(preSta, forward);
+            l.depart(this, forward);
 		} else {
 			throw new Exception();
 		}
@@ -145,7 +145,7 @@ public class Station {
 	}
 
 	public Line getRandomLine(){
-		Line l = lines.get((int)Math.random()*(lines.size()-1));
+		Line l = lines.get((int)(Math.random()*(lines.size()-1)));
 		return l;
 	}
 

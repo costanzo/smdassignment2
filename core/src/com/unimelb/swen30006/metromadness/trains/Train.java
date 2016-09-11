@@ -123,12 +123,11 @@ public abstract class Train {
 			// so, then occupy it if possible.
             boolean canDepart = this.station.canDepart(this.trainLine, this.forward);
 			 if(canDepart){
-			 	Station previousStation = this.station;
 				try {
 					// Find the next
                     Station next = this.station.nextStation(this.trainLine, this.forward);
 					// Depart our current station
-					this.station.depart(this, previousStation, this.trainLine, this.forward);
+					this.station.depart(this, this.trainLine, this.forward);
 					this.station = next;
 
 				} catch (Exception e) {
